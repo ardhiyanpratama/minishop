@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendService", "BackendService.csproj", "{52C92F45-7ACC-4AFA-A047-E990949A69FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomLibrary", "..\CustomLibrary\CustomLibrary.csproj", "{5E5F0C73-702B-49EB-915C-4FCFC1ED43EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52C92F45-7ACC-4AFA-A047-E990949A69FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C92F45-7ACC-4AFA-A047-E990949A69FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C92F45-7ACC-4AFA-A047-E990949A69FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C92F45-7ACC-4AFA-A047-E990949A69FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E5F0C73-702B-49EB-915C-4FCFC1ED43EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5F0C73-702B-49EB-915C-4FCFC1ED43EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E5F0C73-702B-49EB-915C-4FCFC1ED43EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E5F0C73-702B-49EB-915C-4FCFC1ED43EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB587D79-830F-4358-9F50-CEEBC8B1DB0E}
+	EndGlobalSection
+EndGlobal
