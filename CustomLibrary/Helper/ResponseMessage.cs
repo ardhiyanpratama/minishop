@@ -27,8 +27,22 @@ namespace CustomLibrary.Helper
             public const string DataAlreadyExist = "Data Sudah Ada";
             public const string DeleteSuccess = "Data Berhasil Dihapus";
             public const string UpdateSuccess = "Data Berhasil Diubah";
+            public const string UpdateFailed = "Data Gagal Diubah";
             public const string WriteSuccess = "Data Berhasil Disimpan";
             public const string WriteFailed = "Data Gagal Disimpan";
+        }
+        public static class Category
+        {
+            public const string ClassDifferent = "Kelas tidak sesuai";
+            public const string CategoryNotFound = "Produk kategori tidak dapat ditemukan, harap periksa kembali";
+            public const string CategoryUsedInProduct = "Kategori digunakan di produk";
+            public const string CategoryAlreadyExist = "Produk kategori sudah terdaftar";
+        }
+        public static class Product
+        {
+            public const string ProductNotFound = "Produk tidak dapat ditemukan, harap periksa kembali";
+            public const string ProductUsedInVariant = "Produk digunakan di produk varian";
+            public const string ProductAlreadyExist = "Produk sudah terdaftar";
         }
         public static class Bank
         {

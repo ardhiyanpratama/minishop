@@ -1,4 +1,8 @@
-﻿using BackendService.Data;
+﻿using BackendService.Application.Core.IRepositories;
+using BackendService.Application.Core.Repositories;
+using BackendService.Data;
+using BackendService.Infrastructure.Services;
+using BackendService.Settings;
 using CustomLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +12,7 @@ namespace ManagementUserService
     {
         public static IServiceCollection AddApplicationSettings(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.Configure<AppSettings>(configuration.GetSection(nameof(AppSettings)));
+            services.Configure<AppSettings>(configuration.GetSection(nameof(AppSettings)));
             //services.Configure<JwtAuthSetting>(configuration.GetSection(nameof(JwtAuthSetting)));
 
             return services;
@@ -29,13 +33,15 @@ namespace ManagementUserService
             services.AddHttpClient();
 
             services.AddTransient<IIdentityService, IdentityService>();
-            //services.AddTransient<IPrivateUserIdService, PrivateUserIdService>();
+            services.AddTransient<IPrivateUserIdService, PrivateUserIdService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             return services;
         }
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
             //services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
 
             return services;
         }
