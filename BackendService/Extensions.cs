@@ -42,6 +42,9 @@ namespace ManagementUserService
             //services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             return services;
         }

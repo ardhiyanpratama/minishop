@@ -8,6 +8,7 @@ namespace BackendService.Data.Domain
         public Guid? MsProductVariantId { get; set; }
         public double? Price { get; set; }
         public double? Qty { get; set; }
+        public double? SubTotal { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
 

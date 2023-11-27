@@ -13,6 +13,7 @@ namespace BackendService.Data.Domain
         public string? Name { get; set; }
         public double? Qty { get; set; }
         public double? Price { get; set; }
+        public string? ImageLocation { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsDelete { get; set; }
 
