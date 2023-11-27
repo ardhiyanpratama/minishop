@@ -22,7 +22,8 @@ namespace BackendService.Controllers
 
         public TransactionController(ApplicationDbContext context
             ,IIdentityService identityService
-            ,ITransactionRepository transactionRepository)
+            ,ITransactionRepository transactionRepository
+            )
         {
             _context = context;
             _identityService = identityService;

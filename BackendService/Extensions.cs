@@ -45,6 +45,7 @@ namespace ManagementUserService
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IUploadRepository, UploadRepository>();
 
             return services;
         }

@@ -30,23 +30,26 @@ namespace BackendService.Application.Core.Repositories
         public async ValueTask<ResponseBaseViewModel> SubmitProduct(ProductDto productDto)
         {
             var response = new ResponseBaseViewModel();
+            var pluNumber = await GeneratePluNumber();
             await using var transaction = _applicationDbContext.Database.BeginTransaction();
             try
             {
                 var product = new MsProduct()
                 {
                     Name = productDto.Name,
-                    Plu = GeneratePluNumber(),
+                    Plu = pluNumber,
+                    MsProductCategoryId = productDto.MsProductCategoryId,
                     CreatedDate = DateTime.UtcNow,
                     CreatedUser = _identityService.GetUserId(),
                     UpdatedDate = DateTime.UtcNow,
                     UpdatedUser = _identityService.GetUserId(),
+                    IsActive = true,
+                    IsDelete = false
                 };
 
                 await _applicationDbContext.MsProducts.AddAsync(product);
-                await _applicationDbContext.SaveChangesAsync();
-
                 transaction.Commit();
+                await _applicationDbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -58,9 +61,9 @@ namespace BackendService.Application.Core.Repositories
             return response;
         }
 
-        private string GeneratePluNumber()
+        private async Task<string> GeneratePluNumber()
         {
-            var findCountAllData = _applicationDbContext.MsProducts.Count();
+            var findCountAllData = await _applicationDbContext.MsProducts.CountAsync();
             var continuousNumber = (findCountAllData + 1).ToString("D5");
 
             var newFormat = "PDCT" + continuousNumber;
@@ -79,7 +82,9 @@ namespace BackendService.Application.Core.Repositories
                 existing.UpdatedDate = DateTime.UtcNow;
                 existing.UpdatedUser = _identityService.GetUserId();
 
+                _applicationDbContext.MsProducts.Update(existing);
                 transaction.Commit();
+                await _applicationDbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {

@@ -27,9 +27,10 @@ namespace BackendService.Application.Core.Repositories
             return result;
         }
 
-        public async ValueTask<ResponseBaseViewModel> SubmitProductVariant(ProductVariantDto productVariantDto)
+        public async ValueTask<ResponseBaseViewModel> SubmitProductVariant(ProductVariantDto productVariantDto, string? fileName)
         {
             var response = new ResponseBaseViewModel();
+            var generateCode = GenerateCodeNumber(productVariantDto.MsProductId);
             await using var transaction = _context.Database.BeginTransaction();
             try
             {
@@ -37,10 +38,10 @@ namespace BackendService.Application.Core.Repositories
                 {
                     Name = productVariantDto.Name,
                     MsProductId = productVariantDto.MsProductId,
-                    Code = GenerateCodeNumber(productVariantDto.MsProductId),
+                    Code = generateCode,
                     Qty = productVariantDto.Qty,
                     Price = productVariantDto.Price,
-                    ImageLocation = productVariantDto.ImageLocation,
+                    ImageLocation = string.IsNullOrEmpty(fileName)?string.Empty : fileName,
                     CreatedDate = DateTime.UtcNow,
                     CreatedUser = _identityService.GetUserId(),
                     UpdatedDate = DateTime.UtcNow,
@@ -50,9 +51,8 @@ namespace BackendService.Application.Core.Repositories
                 };
 
                 await _context.MsProductVariants.AddAsync(productVariant);
-                await _context.SaveChangesAsync();
-
                 transaction.Commit();
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace BackendService.Application.Core.Repositories
             return newFormat;
         }
 
-        public async ValueTask<ResponseBaseViewModel> UpdateProductVariant(string id, ProductVariantDto productVariantDto)
+        public async ValueTask<ResponseBaseViewModel> UpdateProductVariant(string id, ProductVariantDto productVariantDto, string? fileName = null)
         {
             var response = new ResponseBaseViewModel();
             await using var transaction = _context.Database.BeginTransaction();
@@ -86,7 +86,7 @@ namespace BackendService.Application.Core.Repositories
                 existing.Name = productVariantDto.Name;
                 existing.Qty = productVariantDto.Qty;
                 existing.Price = productVariantDto.Price;
-                existing.ImageLocation = productVariantDto.ImageLocation;
+                existing.ImageLocation = string.IsNullOrEmpty(fileName) ? string.Empty : fileName;
                 existing.UpdatedDate = DateTime.UtcNow;
                 existing.UpdatedUser = _identityService.GetUserId();
 

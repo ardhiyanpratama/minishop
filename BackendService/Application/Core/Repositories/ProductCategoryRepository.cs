@@ -42,12 +42,13 @@ namespace BackendService.Application.Core.Repositories
                     CreatedUser = _identityService.GetUserId(),
                     UpdatedDate = DateTime.UtcNow,
                     UpdatedUser = _identityService.GetUserId(),
+                    IsActive = true,
+                    IsDelete = false
                 };
 
                 await _applicationDbContext.MsProductCategories.AddAsync(productCategory);
-                await _applicationDbContext.SaveChangesAsync();
-
                 transaction.Commit();
+                await _applicationDbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -71,7 +72,9 @@ namespace BackendService.Application.Core.Repositories
                 existing.UpdatedDate = DateTime.UtcNow;
                 existing.UpdatedUser = _identityService.GetUserId();
 
+                _applicationDbContext.MsProductCategories.Update(existing);
                 transaction.Commit();
+                await _applicationDbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {

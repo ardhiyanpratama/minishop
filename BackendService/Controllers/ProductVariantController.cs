@@ -23,14 +23,17 @@ namespace BackendService.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IIdentityService _identityService;
         private readonly IProductVariantRepository _productVariantRepository;
+        private readonly IUploadRepository _uploadRepository;
 
         public ProductVariantController(ApplicationDbContext context
             ,IIdentityService identityService
-            ,IProductVariantRepository productVariantRepository)
+            ,IProductVariantRepository productVariantRepository
+            ,IUploadRepository uploadRepository)
         {
             _context = context;
             _identityService = identityService;
             _productVariantRepository = productVariantRepository;
+            _uploadRepository = uploadRepository;
         }
 
         [HttpGet]
@@ -96,7 +99,14 @@ namespace BackendService.Controllers
                 throw new AppException(ResponseMessageExtensions.Variant.ProductVariantAlreadyExist);
             }
 
-            var result = await _productVariantRepository.SubmitProductVariant(input);
+            var uploadResult = new FileUploadResponse();
+
+            if (input.File != null)
+            {
+                uploadResult = await _uploadRepository.UploadSingleFile(input.File);
+            }
+
+            var result = await _productVariantRepository.SubmitProductVariant(input, uploadResult.Filename);
 
             if (result.IsError)
             {
@@ -115,7 +125,14 @@ namespace BackendService.Controllers
                 throw new AppException(ResponseMessageExtensions.Variant.ProductVariantNotFound);
             }
 
-            var updateResult = await _productVariantRepository.UpdateProductVariant(id, input);
+            var uploadResult = new FileUploadResponse();
+
+            if (input.File != null)
+            {
+                uploadResult = await _uploadRepository.UploadSingleFile(input.File);
+            }
+
+            var updateResult = await _productVariantRepository.UpdateProductVariant(id, input, uploadResult.Filename);
 
             if (updateResult.IsError)
             {

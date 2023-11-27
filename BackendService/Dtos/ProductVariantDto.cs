@@ -10,6 +10,6 @@ namespace BackendService.Dtos
         public Guid? MsProductId { get; set; }
         public double? Qty { get; set; }
         public double? Price { get; set; }
-        public string? ImageLocation { get; set; }
+        public IFormFile? File { get; set; }
     }
 }
