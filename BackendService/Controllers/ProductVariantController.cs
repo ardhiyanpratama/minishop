@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mapster;
+using BrunoZell.ModelBinding;
+using System.Text.Json.Nodes;
 
 namespace BackendService.Controllers
 {
@@ -87,12 +89,11 @@ namespace BackendService.Controllers
             {
                 throw new AppException(ResponseMessageExtensions.Variant.ProductVariantNotFound);
             }
-
             return Ok(existing);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductVariantDto input, CancellationToken cancellationToken)
+        public async Task<IActionResult> Post([ModelBinder(BinderType = typeof(JsonModelBinder))] ProductVariantDto input, IFormFile file, CancellationToken cancellationToken)
         {
             if (await _context.MsProductVariants.AnyAsync(o => o.Name.ToLower() == input.Name.ToLower() && o.IsDelete == false, cancellationToken))
             {
@@ -101,9 +102,9 @@ namespace BackendService.Controllers
 
             var uploadResult = new FileUploadResponse();
 
-            if (input.File != null)
+            if (file != null)
             {
-                uploadResult = await _uploadRepository.UploadSingleFile(input.File);
+                uploadResult = await _uploadRepository.UploadSingleFile(file);
             }
 
             var result = await _productVariantRepository.SubmitProductVariant(input, uploadResult.Filename);
@@ -117,7 +118,7 @@ namespace BackendService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] string id, [FromBody] ProductVariantDto input, CancellationToken cancellationToken)
+        public async Task<IActionResult> Put([FromRoute] string id, [ModelBinder(BinderType = typeof(JsonModelBinder))] ProductVariantDto input, IFormFile file, CancellationToken cancellationToken)
         {
             var existing = await _context.MsProductVariants.FirstOrDefaultAsync(e => e.Id.ToString() == id, cancellationToken);
             if (existing is null)
@@ -127,9 +128,9 @@ namespace BackendService.Controllers
 
             var uploadResult = new FileUploadResponse();
 
-            if (input.File != null)
+            if (file != null)
             {
-                uploadResult = await _uploadRepository.UploadSingleFile(input.File);
+                uploadResult = await _uploadRepository.UploadSingleFile(file);
             }
 
             var updateResult = await _productVariantRepository.UpdateProductVariant(id, input, uploadResult.Filename);

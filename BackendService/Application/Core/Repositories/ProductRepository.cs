@@ -64,7 +64,7 @@ namespace BackendService.Application.Core.Repositories
         private async Task<string> GeneratePluNumber()
         {
             var findCountAllData = await _applicationDbContext.MsProducts.CountAsync();
-            var continuousNumber = (findCountAllData + 1).ToString("D5");
+            var continuousNumber = (findCountAllData + 1).ToString("D7");
 
             var newFormat = "PDCT" + continuousNumber;
             return newFormat;

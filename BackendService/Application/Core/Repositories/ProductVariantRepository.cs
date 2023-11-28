@@ -67,8 +67,8 @@ namespace BackendService.Application.Core.Repositories
         private string GenerateCodeNumber(Guid? msProductId)
         {
             var findFormatByProductId = _context.MsProducts.FirstOrDefault(x => x.Id == msProductId);
-            var totalCountByProductId = _context.MsProducts.Where(x => x.Id == msProductId).Count();
-            var continuousNumber = (totalCountByProductId + 1).ToString("D3");
+            var totalCountByProductId = _context.MsProductVariants.Where(x => x.MsProductId == msProductId).Count();
+            var continuousNumber = (totalCountByProductId + 1).ToString("D4");
 
             var newFormat = findFormatByProductId?.Plu + continuousNumber;
             

@@ -66,7 +66,11 @@ namespace BackendService.Application.Core.Repositories
 
         private void CreateThumb(IFormFile file, string thumbPath)
         {
-            throw new NotImplementedException();
+            using (var thumb = new MagickImage(file.OpenReadStream()))
+            {
+                thumb.Thumbnail(new MagickGeometry(100, 100));
+                thumb.WriteAsync(thumbPath);
+            }
         }
     }
 

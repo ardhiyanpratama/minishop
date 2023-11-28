@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JsonModelBinder" Version="2.1.1" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="13.4.0" />
     <PackageReference Include="Magick.NET.Core" Version="13.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
